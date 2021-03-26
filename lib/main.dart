@@ -1,7 +1,8 @@
+import 'package:delimeals/pages/meal_detail.dart';
 import 'package:flutter/material.dart';
 
-import 'package:delimeals/widgets/category/categories_page.dart';
-import 'package:delimeals/widgets/category/category_meals_page.dart';
+import 'package:delimeals/pages/categories_page.dart';
+import 'package:delimeals/pages/category_meals_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,6 +37,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => CategoriesPage(),
         CategoryMealsPage.routeName: (ctx) => CategoryMealsPage(),
+        MeatDetailPage.routeName: (ctx) => MeatDetailPage(),
+      },
+      // default page for 404
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (ctx) => CategoriesPage());
       },
     );
   }
