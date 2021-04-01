@@ -1,4 +1,4 @@
-import 'package:delimeals/pages/meal_detail.dart';
+import 'package:delimeals/pages/meal_detail_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:delimeals/models/meal.dart';
