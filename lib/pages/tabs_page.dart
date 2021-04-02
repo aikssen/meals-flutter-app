@@ -33,7 +33,8 @@ class _TabsPageState extends State<TabsPage> {
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.white,
+        // backgroundColor: Theme.of(context).primaryColor,
         // unselectedItemColor: Colors.lightGreen,
         selectedItemColor: Theme.of(context).accentColor,
         currentIndex: _selectedPageIndex,

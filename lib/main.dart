@@ -6,18 +6,58 @@ import 'package:delimeals/pages/meal_detail_page.dart';
 import 'package:delimeals/pages/tabs_page.dart';
 import 'package:delimeals/pages/filters_page.dart';
 
+import 'package:delimeals/models/meal.dart';
+import 'package:delimeals/fixtures/dummy_data.dart';
+
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map<String, bool> _filters = {
+    'gluten': false,
+    'lactose': false,
+    'vegetarian': false,
+    'vegan': false,
+  };
+
+  List<Meal> _availableMeals = DUMMY_MEALS;
+
+  void _setFilters(Map<String, bool> filtersData) {
+    setState(() {
+      _filters = filtersData;
+
+      _availableMeals = DUMMY_MEALS.where((meal) {
+        if (_filters['gluten'] && !meal.isGlutenFree) {
+          return false;
+        }
+        if (_filters['lactose'] && !meal.isLactoseFree) {
+          return false;
+        }
+        if (_filters['vegetarian'] && !meal.isVegetarian) {
+          return false;
+        }
+        if (_filters['vegan'] && !meal.isVegan) {
+          return false;
+        }
+
+        return true;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DeliMeals',
       theme: ThemeData(
-        primarySwatch: createMaterialColor(Color.fromRGBO(251, 252, 254, 1)),
-        // primarySwatch: Colors.orange,
+        // primarySwatch: createMaterialColor(Color.fromRGBO(251, 252, 254, 1)),
+        primarySwatch: Colors.orange,
         accentColor: Colors.lime,
         canvasColor: Color.fromRGBO(249, 248, 239, 1),
         // canvasColor: Color.fromRGBO(255, 254, 229, 1),
@@ -38,9 +78,10 @@ class MyApp extends StatelessWidget {
       // home: CategoriesPage(),
       routes: {
         '/': (ctx) => TabsPage(),
-        CategoryMealsPage.routeName: (ctx) => CategoryMealsPage(),
+        CategoryMealsPage.routeName: (ctx) =>
+            CategoryMealsPage(_availableMeals),
         MeatDetailPage.routeName: (ctx) => MeatDetailPage(),
-        FiltersPage.routeName: (ctx) => FiltersPage(),
+        FiltersPage.routeName: (ctx) => FiltersPage(_filters, _setFilters),
       },
       // default page for 404
       onUnknownRoute: (settings) {
