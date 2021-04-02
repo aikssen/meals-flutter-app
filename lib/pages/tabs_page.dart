@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:delimeals/pages/categories_page.dart';
 import 'package:delimeals/pages/favorites_page.dart';
+import 'package:delimeals/widgets/nav/main_drawer.dart';
 
 class TabsPage extends StatefulWidget {
   @override
@@ -9,11 +10,6 @@ class TabsPage extends StatefulWidget {
 }
 
 class _TabsPageState extends State<TabsPage> {
-  // final List<Widget> _pages = [
-  //   CategoriesPage(),
-  //   FavoritesPage(),
-  // ];
-
   final List<Map<String, Object>> _pages = [
     {'title': 'Categories', 'page': CategoriesPage()},
     {'title': 'Favorites', 'page': FavoritesPage()},
@@ -33,6 +29,7 @@ class _TabsPageState extends State<TabsPage> {
       appBar: AppBar(
         title: Text(_pages[_selectedPageIndex]['title']),
       ),
+      drawer: MainDrawer(),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
