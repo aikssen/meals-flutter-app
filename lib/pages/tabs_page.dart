@@ -9,32 +9,48 @@ class TabsPage extends StatefulWidget {
 }
 
 class _TabsPageState extends State<TabsPage> {
+  // final List<Widget> _pages = [
+  //   CategoriesPage(),
+  //   FavoritesPage(),
+  // ];
+
+  final List<Map<String, Object>> _pages = [
+    {'title': 'Categories', 'page': CategoriesPage()},
+    {'title': 'Favorites', 'page': FavoritesPage()},
+  ];
+
+  int _selectedPageIndex = 0;
+
+  void _selectPage(int index) {
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Meals'),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.category),
-                text: 'Categories',
-              ),
-              Tab(
-                icon: Icon(Icons.star),
-                text: 'Favorites',
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_pages[_selectedPageIndex]['title']),
+      ),
+      body: _pages[_selectedPageIndex]['page'],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _selectPage,
+        backgroundColor: Theme.of(context).primaryColor,
+        // unselectedItemColor: Colors.lightGreen,
+        selectedItemColor: Theme.of(context).accentColor,
+        currentIndex: _selectedPageIndex,
+        // type: BottomNavigationBarType.shifting,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
           ),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            CategoriesPage(),
-            FavoritesPage(),
-          ],
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Favorites',
+          )
+        ],
       ),
     );
   }
