@@ -1,30 +1,54 @@
 import 'package:flutter/material.dart';
 
 import 'package:delimeals/fixtures/dummy_data.dart';
+import 'package:delimeals/models/meal.dart';
 import 'package:delimeals/widgets/meal/meal_item.dart';
 
-class CategoryMealsPage extends StatelessWidget {
+class CategoryMealsPage extends StatefulWidget {
   static String routeName = '/category-meals';
 
   @override
-  Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, String>;
-    final categoryID = routeArgs['id'];
-    final categoryTitle = routeArgs['title'];
-    final categoryMeals = DUMMY_MEALS
-        .where((meal) => meal.categories.contains(categoryID))
-        .toList();
+  _CategoryMealsPageState createState() => _CategoryMealsPageState();
+}
 
+class _CategoryMealsPageState extends State<CategoryMealsPage> {
+  String categoryTitle;
+  List<Meal> displayedMeals;
+  bool _loadedInitData = false; // not needed in 2.0.2 ??
+
+  @override
+  void didChangeDependencies() {
+    if (!_loadedInitData) {
+      final routeArgs =
+          ModalRoute.of(context).settings.arguments as Map<String, String>;
+      final categoryID = routeArgs['id'];
+      categoryTitle = routeArgs['title'];
+      displayedMeals = DUMMY_MEALS
+          .where((meal) => meal.categories.contains(categoryID))
+          .toList();
+      _loadedInitData = true;
+    }
+
+    super.didChangeDependencies();
+  }
+
+  void _removeMeal(String mealID) {
+    setState(() {
+      displayedMeals.removeWhere((meal) => meal.id == mealID);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryTitle),
       ),
       body: ListView.builder(
         itemBuilder: (ctx, index) {
-          return MealItem(categoryMeals[index]);
+          return MealItem(displayedMeals[index], _removeMeal);
         },
-        itemCount: categoryMeals.length,
+        itemCount: displayedMeals.length,
       ),
     );
   }

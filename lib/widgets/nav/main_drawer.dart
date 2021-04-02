@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:delimeals/pages/filters_page.dart';
+
 class MainDrawer extends StatelessWidget {
   Widget _buildListTile(String title, IconData icon, Function handler) {
     return ListTile(
@@ -41,8 +43,20 @@ class MainDrawer extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          _buildListTile('Meals', Icons.restaurant, () {}),
-          _buildListTile('Settings', Icons.settings, () {}),
+          _buildListTile(
+            'Meals',
+            Icons.restaurant,
+            () {
+              Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
+          _buildListTile(
+            'Settings',
+            Icons.settings,
+            () {
+              Navigator.of(context).pushReplacementNamed(FiltersPage.routeName);
+            },
+          ),
         ],
       ),
     );

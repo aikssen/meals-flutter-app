@@ -4,6 +4,7 @@ import 'package:delimeals/pages/categories_page.dart';
 import 'package:delimeals/pages/category_meals_page.dart';
 import 'package:delimeals/pages/meal_detail_page.dart';
 import 'package:delimeals/pages/tabs_page.dart';
+import 'package:delimeals/pages/filters_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => TabsPage(),
         CategoryMealsPage.routeName: (ctx) => CategoryMealsPage(),
         MeatDetailPage.routeName: (ctx) => MeatDetailPage(),
+        FiltersPage.routeName: (ctx) => FiltersPage(),
       },
       // default page for 404
       onUnknownRoute: (settings) {

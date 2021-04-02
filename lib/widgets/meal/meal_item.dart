@@ -5,8 +5,9 @@ import 'package:delimeals/models/meal.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
+  final Function removeItem;
 
-  MealItem(this.meal);
+  MealItem(this.meal, this.removeItem);
 
   String get complexityText {
     switch (meal.complexity) {
@@ -38,7 +39,13 @@ class MealItem extends StatelessWidget {
     Navigator.of(context).pushNamed(
       MeatDetailPage.routeName,
       arguments: {'id': meal.id},
-    );
+    ).then((result) {
+      // action to exec when back to this page
+      print(result); // result = mealID - e.g. 'm1'
+      if (result != null) {
+        removeItem(result);
+      }
+    });
   }
 
   @override
