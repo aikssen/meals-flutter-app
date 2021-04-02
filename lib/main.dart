@@ -1,8 +1,9 @@
-import 'package:delimeals/pages/meal_detail_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:delimeals/pages/categories_page.dart';
 import 'package:delimeals/pages/category_meals_page.dart';
+import 'package:delimeals/pages/meal_detail_page.dart';
+import 'package:delimeals/pages/tabs_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: CategoriesPage(),
       routes: {
-        '/': (ctx) => CategoriesPage(),
+        '/': (ctx) => TabsPage(),
         CategoryMealsPage.routeName: (ctx) => CategoryMealsPage(),
         MeatDetailPage.routeName: (ctx) => MeatDetailPage(),
       },
