@@ -3,19 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:delimeals/pages/categories_page.dart';
 import 'package:delimeals/pages/favorites_page.dart';
 import 'package:delimeals/widgets/nav/main_drawer.dart';
+import 'package:delimeals/models/meal.dart';
 
 class TabsPage extends StatefulWidget {
+  final List<Meal> favoriteMeal;
+
+  TabsPage(this.favoriteMeal);
+
   @override
   _TabsPageState createState() => _TabsPageState();
 }
 
 class _TabsPageState extends State<TabsPage> {
-  final List<Map<String, Object>> _pages = [
-    {'title': 'Categories', 'page': CategoriesPage()},
-    {'title': 'Favorites', 'page': FavoritesPage()},
-  ];
-
+  List<Map<String, Object>> _pages;
   int _selectedPageIndex = 0;
+
+  @override
+  void initState() {
+    _pages = [
+      {'title': 'Categories', 'page': CategoriesPage()},
+      {'title': 'Favorites', 'page': FavoritesPage(widget.favoriteMeal)},
+    ];
+
+    super.initState();
+  }
 
   void _selectPage(int index) {
     setState(() {

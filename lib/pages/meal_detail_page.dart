@@ -5,6 +5,11 @@ import 'package:delimeals/fixtures/dummy_data.dart';
 class MeatDetailPage extends StatelessWidget {
   static String routeName = '/meal-detail';
 
+  final Function toggleFavorite;
+  final Function isFavorite;
+
+  MeatDetailPage(this.toggleFavorite, this.isFavorite);
+
   Widget _buildSectionTitle(BuildContext context, String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -96,8 +101,11 @@ class MeatDetailPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
-        onPressed: () => Navigator.of(context).pop(mealID),
+        child: Icon(
+          isFavorite(mealID) ? Icons.star : Icons.star_border,
+        ),
+        // onPressed: () => Navigator.of(context).pop(mealID),
+        onPressed: () => toggleFavorite(mealID),
       ),
     );
   }
